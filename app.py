@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import polars as pl
 import numpy as np
 import pickle
 
@@ -106,7 +107,7 @@ elif genHlth == "Very good":
 else :
     GenHlth = 1
 
-GenHealth=((GenHlth-1)/(5-1))
+GenHlth=((GenHlth-1)/(5-1))
 
 PhysHlth= ((physHlth-0)/(30-0))
         
@@ -166,18 +167,13 @@ BMICAT=((BMICAT-0)/(3-0))
 variable= [[float(HighBP),float(HighChol),float(Smoker),float(Stroke),float(HeartDiseaseorAttack),float(PhysActivity),float(Fruits),float(Veggies),
             float(HvyAlcoholConsump),float(GenHlth),float(MentHlth),float(PhysHlth),float(DiffWalk),float(Sex),float(Age),float(BMICAT)]]
 
-#variable= [[1.0,1.0,1.0,1.0,0.0,1.0,1.0,0.0,0.0,0.25,0.000000,0.000000,0.0,0.0,0.750000,0.333333]]
 
 if submit:
     prediction = model.predict(variable)
     prediction_prob = model.predict_proba(variable)
     if prediction == 0:
+        
         st.success(f"**The probability that you will have Diabetes is {round(prediction_prob[0][1] * 100, 2)}%."f" You are healthy!**")
     else:
+   
         st.warning(f"**The probability that you will have Diabetes is {round(prediction_prob[0][1] * 100, 2)}%."f" You are Not healthy!**")
-
-
-
-
-
-        #HighBP	HighChol	Smoker	Stroke	HeartDiseaseorAttack	PhysActivity	Fruits	Veggies	HvyAlcoholConsump	GenHlth	MentHlth	PhysHlth	DiffWalk	Sex	Age	BMICAT
